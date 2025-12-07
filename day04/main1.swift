@@ -1,0 +1,48 @@
+func printMat(_ matrix: [[Character]]) {
+    for row in matrix {
+        for char in row {
+            print(char, terminator: " ")
+        }
+        print()
+    }
+}
+
+var input: [[Character]] = []
+while let line = readLine() {
+    input.append(Array(line))
+}
+let deltas: [[Int]] = [
+[-1, -1],
+[-1, 0],
+[-1, 1],
+[0, -1],
+[0, 1],
+[1, -1],
+[1, 0],
+[1, 1]
+]
+let size = input.count
+var total = 0
+for y in 0..<size {
+    for x in 0..<size {
+        if input[y][x] == "." {
+            continue
+        }
+        var count = 0
+        for delta in deltas {
+            let ny = y + delta[0]
+            let nx = x + delta[1]
+            if 0 <= ny && ny < size && 0 <= nx && nx < size {
+                if input[ny][nx] != "." {
+                    count += 1
+                }
+            }
+        }
+        if count < 4 {
+            total += 1
+            input[y][x] = "x"
+        }
+    }
+}
+printMat(input)
+print(total)
